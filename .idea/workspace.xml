@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7b74ada-c781-490e-85d0-ad5093bebc39" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login-process.php" beforeDir="false" afterPath="$PROJECT_DIR$/login-process.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/sidebar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/Media.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Media.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/Tweet.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Tweet.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tweet-new-process.php" beforeDir="false" afterPath="$PROJECT_DIR$/tweet-new-process.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tweet-new.php" beforeDir="false" afterPath="$PROJECT_DIR$/tweet-new.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/tweet-new.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/tweet-new.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,16 +33,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/media/vicesc/Transcend/202223-Pego/Mòduls/DWES/tasks/05&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/vicent/Google-Drive/202223-Pego/Mòduls/DWES/tasks/2023-truiter",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -70,7 +63,7 @@
       <workItem from="1669067820641" duration="905000" />
       <workItem from="1669134888961" duration="144000" />
       <workItem from="1669135171259" duration="3110000" />
-      <workItem from="1669145955475" duration="5143000" />
+      <workItem from="1669145955475" duration="5522000" />
     </task>
     <servers />
   </component>
