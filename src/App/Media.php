@@ -5,9 +5,10 @@ use App\Exceptions\InvalidWidthMediaException;
 
 abstract class Media
 {
-    private string $caption;
+    private string $caption; // alt_text -> varchar(255);
     private int $height;
     private int $width;
+    private string $url; //varchar(255)
 
     public function __construct(string $caption, int $width, int $height)
     {

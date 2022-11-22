@@ -5,10 +5,10 @@ use DateTime;
 
 class Tweet
 {
-    private string $text;
-    private User $author;
-    private DateTime $createdAt;
-    private int $likeCount;
+    private string $text; // text (var
+    private User $author; // author_id
+    private DateTime $createdAt; // created_at
+    private int $likeCount; // like_count
     private array $attachments;
 
     public function __construct(string $text, User $author)
