@@ -1,5 +1,12 @@
 <?php
 declare(strict_types=1);
+require_once 'autoload.php';
+
+use App\Helpers\Exceptions\NoUploadedFileException;
+use App\Helpers\Exceptions\UploadedFileException;
+use App\Helpers\FlashMessage;
+use App\Helpers\UploadedFileHandler;
+
 session_start();
 
 const UPLOAD_PATH = "uploads";
@@ -20,44 +27,25 @@ else
 $validTypes = ["image/jpeg", "image/jpg", "image/png"];
 
 if (empty($errors)) {
+
     try {
-        if (!empty($_FILES['file']) && ($_FILES['file']['error'] == UPLOAD_ERR_OK)) {
-            if (!file_exists(UPLOAD_PATH))
-                mkdir(UPLOAD_PATH, 0777, true);
-
-            $tempFilename = $_FILES["file"]["tmp_name"];
-            $currentFilename = $_FILES["file"]["name"];
-
-            $mimeType = $_FILES["file"]["type"];
-
-            $extension = explode("/", $mimeType)[1];
-            $newFilename = md5((string)rand()) . "." . $extension;
-            $newFullFilename = UPLOAD_PATH . "/" . $newFilename;
-            $fileSize = $_FILES["file"]["size"];
-
-            if (!in_array($mimeType, $validTypes))
-                throw new Exception("La foto no és jpg");
-
-            if ($fileSize > MAX_SIZE)
-                throw new Exception("La foto té $fileSize bytes");
-            var_dump($tempFilename, $newFullFilename);
-            if (!move_uploaded_file($tempFilename, $newFullFilename))
-                throw new Exception("No s'ha pogut moure la foto");
-
-
-        } else
-            throw new Exception("Cal pujar una photo");
-    } catch (Exception $e) {
+        $uploadedFile = new UploadedFileHandler($_FILES["file"], $validTypes, MAX_SIZE);
+        $newFilename = $uploadedFile->handle(UPLOAD_PATH);
+    }
+    catch (NoUploadedFileException $e) {
+        $errors[] = "El fitxer es obligatori";
+    }
+    catch (UploadedFileException $e) {
         $errors[] = $e->getMessage();
+    }
+    catch (Exception $exception) {
+        $errors[] = "Error general:" . $exception->getMessage();
     }
 }
 
 if (!empty($errors)) {
-    $_SESSION["errors"] = $errors;
-    $_SESSION["data"] = $data;
-
-    /*    FlashMessage::set('errors', $errors);
-        FlashMessage::set('data', $data);*/
+    FlashMessage::set('errors', $errors);
+    FlashMessage::set('data', $data);
     header('Location:tweet-new.php');
     exit();
 } else {
@@ -91,6 +79,12 @@ if (!empty($errors)) {
         }
     } catch (PDOException $e) {
         die($e->getMessage());
+    }
+
+    if (!empty($errors)) {
+        FlashMessage::set("errors", $errors);
+        header('Location:tweet-new.php');
+        exit();
     }
 
     $_SESSION["data"] = $data;

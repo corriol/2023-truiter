@@ -1,17 +1,15 @@
 <?php
+require_once 'autoload.php';
+
+use App\Helpers\FlashMessage;
+
 session_start();
 // ací va la lògica per crear un nou tweet
-/*
+
 $errors = FlashMessage::get('errors', []);
 $data = FlashMessage::get('data',[]);
-$message = FlassMessage::get('message');*/
+$message = FlashMessage::get('message');
 
-$errors = $_SESSION["errors"] ?? [];
-unset($_SESSION["errors"]);
-
-
-$data = $_SESSION["data"] ?? [];
-unset($_SESSION["data"]);
 
 if (empty($_SESSION["user"])) {
     header('Location: login.php');

@@ -1,7 +1,11 @@
 <?php
 require_once 'autoload.php';
-use App\User;
+
 session_start();
+
+use App\User;
+use App\Helpers\FlashMessage;
+
 
 $errors = [];
 
@@ -10,8 +14,7 @@ $password = filter_input(INPUT_POST, "password");
 
 
 if (empty($username) || empty($password))
-    $errors[] = "Nom d'usuario o contrasenya incorrecta.";
-
+    $errors[] = "Nom d'usuari o contrasenya incorrecta";
 
 
 if (empty($errors))
@@ -23,7 +26,7 @@ try {
     $user = $stmt->fetch();
 
     if (empty($user) || (!password_verify($password,  $user["password"])))
-        $errors[] = "Nom d'usuario o contrasenya incorrecta.";
+        $errors[] = "Nom d'usuari o contrasenya incorrecta";
 }
 catch (PDOException $e) {
     die($e-> getMessage ());
@@ -35,8 +38,10 @@ if (empty($errors)) {
     exit();
 }
 
-$_SESSION["data"]["username"] = $username;
-$_SESSION["errors"] = $errors;
+$data["username"] = $username;
+
+FlashMessage::set("data", $data);
+FlashMessage::set("errors", $errors);
 
 header('Location: login.php');
 exit();

@@ -1,6 +1,12 @@
 <?php
 
-// src/App/Helpers
+namespace App\Helpers;
+
+use App\Helpers\Exceptions\InvalidTypeUploadedFileException;
+use App\Helpers\Exceptions\NoUploadedFileException;
+use App\Helpers\Exceptions\TooBigUploadedFileException;
+use App\Helpers\Exceptions\UploadedFileException;
+use Exception;
 
 class UploadedFileHandler {
     private array $uploadedFile;
