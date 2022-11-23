@@ -6,6 +6,7 @@ use App\Helpers\Exceptions\NoUploadedFileException;
 use App\Helpers\Exceptions\UploadedFileException;
 use App\Helpers\FlashMessage;
 use App\Helpers\UploadedFileHandler;
+use App\Helpers\Validator;
 
 session_start();
 
@@ -16,13 +17,14 @@ $errors = [];
 $data = [];
 
 $newFilename = "";
-
 $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-if (!empty($text) && strlen($text) > 1 && strlen($text) <= 280)
+try {
+    Validator::lengthBetween($text, 2, 280);
     $data["text"] = $text;
-else
-    $errors[] = "El text enviat és incorrecte";
+} catch (InvalidArgumentException $e) {
+    $errors[] = $e->getMessage();
+}
 
 $validTypes = ["image/jpeg", "image/jpg", "image/png"];
 
@@ -69,7 +71,7 @@ if (!empty($errors)) {
                 $stmt->bindValue("height", $height);
                 $stmt->bindValue("tweet_id", $id);
                 $stmt->bindValue("url", $newFilename);
-                var_dump($stmt);
+              //  var_dump($stmt);
                 $stmt->execute();
 
             } catch (Exception $e) {
