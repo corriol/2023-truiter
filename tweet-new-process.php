@@ -33,7 +33,6 @@ if (empty($errors)) {
         $newFilename = $uploadedFile->handle(UPLOAD_PATH);
     }
     catch (NoUploadedFileException $e) {
-        $errors[] = "El fitxer es obligatori";
     }
     catch (UploadedFileException $e) {
         $errors[] = $e->getMessage();
@@ -63,7 +62,7 @@ if (!empty($errors)) {
 
         if (!empty($newFilename)) {
             try {
-                list($width, $height) = getimagesize($newFullFilename);
+                list($width, $height) = getimagesize(UPLOAD_PATH . "/" . $newFilename);
                 $stmt = $pdo->prepare("INSERT INTO media (alt_text, width, height, tweet_id, url) VALUES (:alt_text, :width, :height, :tweet_id, :url)");
                 $stmt->bindValue("alt_text", $newFilename);
                 $stmt->bindValue("width", $width);
