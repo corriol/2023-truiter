@@ -67,7 +67,7 @@ class UploadedFileHandler {
 
         $extension = explode("/", $mimeType)[1];
 
-        $newFilename = md5((string)rand()) . "." . $extension;
+        $newFilename = md5((string)rand()) . "Helpers" . $extension;
         $newFullFilename = $path . "/" . $newFilename;
 
         if (!move_uploaded_file($this->uploadedFile["tmp_name"], $newFullFilename))
