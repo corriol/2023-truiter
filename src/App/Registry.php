@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Services\TweetRepository;
+use App\Services\UserRepository;
 use InvalidArgumentException;
 
 class Registry
@@ -20,8 +22,10 @@ class Registry
 
     private static array $allowedKeys = [
         self::DB,
-        "TweetRepository"
+        TweetRepository::class,
+        UserRepository::class
     ];
+
 
 
     final public static function set(string $key, mixed $value)
@@ -34,6 +38,8 @@ class Registry
 
     final public static function get(string $key): mixed
     {
+        //var_dump(self::$allowedKeys);
+
         if (!in_array($key, self::$allowedKeys) || !isset(self::$services[$key])) {
            throw new InvalidArgumentException('Invalid key given');
         }

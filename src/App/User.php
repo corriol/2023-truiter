@@ -10,6 +10,7 @@ class User
     private DateTime $createdAt; // created_at
     private bool $verified;
     private string $password; // password -> varchar(255)
+    private int $id;
 
     public function __construct(string $name, string $username)
     {
@@ -82,4 +83,12 @@ class User
         $this->verified = $verified;
     }
 
+    public function setId(int $id)
+    {
+        $this->id = $id;
+    }
+
+    public  function getId(): int {
+        return $this->id;
+    }
 }

@@ -50,4 +50,19 @@ class TweetRepository
         }
         return $tweets;
     }
+
+    function save(Tweet $tweet)
+    {
+        $data["text"] = $tweet->getText();
+        $data["user_id"] = $tweet->getAuthor()->getId();
+        $data["created_at"] = $tweet->getCreatedAt()->format("Y-m-d h:i:s");
+        $data["like_count"] = $tweet->getLikeCount();
+
+        $sql ="INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)";
+        $stmt = $this->db->run($sql, $data);
+
+        $id = $this->db->getPDO()->lastInsertId();
+        $tweet->setId($id);
+    }
+
 }

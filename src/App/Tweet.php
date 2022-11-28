@@ -5,6 +5,7 @@ use DateTime;
 
 class Tweet
 {
+    private int $id;
     private string $text; // text (var
     private User $author; // author_id
     private DateTime $createdAt; // created_at
@@ -104,4 +105,21 @@ class Tweet
     public function addAttachment(Media $media): void {
         $this->attachments[] = $media;
     }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
 }
