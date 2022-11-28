@@ -5,6 +5,7 @@ require_once 'autoload.php';
 
 use App\Registry;
 use App\Services\DB;
+use App\Services\PhotoRepository;
 use App\Services\TweetRepository;
 use App\Services\UserRepository;
 
@@ -17,3 +18,6 @@ Registry::set(TweetRepository::class, $tweetRepository);
 
 $userRepository = new UserRepository();
 Registry::set(UserRepository::class, $userRepository);
+
+$photoRepository = new PhotoRepository();
+Registry::set(PhotoRepository::class, $photoRepository);

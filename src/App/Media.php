@@ -5,10 +5,12 @@ use App\Exceptions\InvalidWidthMediaException;
 
 abstract class Media
 {
+    private int $id;
     private string $caption; // alt_text -> varchar(255);
     private int $height;
     private int $width;
     private string $url; //varchar(255)
+    private Tweet $tweet;
 
     public function __construct(string $caption, int $width, int $height)
     {
@@ -70,5 +72,53 @@ abstract class Media
     }
 
     abstract function getSummary(): string;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return Tweet
+     */
+    public function getTweet(): Tweet
+    {
+        return $this->tweet;
+    }
+
+    /**
+     * @param Tweet $tweet
+     */
+    public function setTweet(Tweet $tweet): void
+    {
+        $this->tweet = $tweet;
+    }
 
 }

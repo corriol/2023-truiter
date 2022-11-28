@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Services\PhotoRepository;
 use App\Services\TweetRepository;
 use App\Services\UserRepository;
 use InvalidArgumentException;
@@ -23,9 +24,9 @@ class Registry
     private static array $allowedKeys = [
         self::DB,
         TweetRepository::class,
-        UserRepository::class
+        UserRepository::class,
+        PhotoRepository::class
     ];
-
 
 
     final public static function set(string $key, mixed $value)
