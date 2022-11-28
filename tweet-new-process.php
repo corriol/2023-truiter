@@ -1,12 +1,16 @@
 <?php
 declare(strict_types=1);
-require_once 'autoload.php';
+require_once 'bootstrap.php';
 
 use App\Helpers\Exceptions\NoUploadedFileException;
 use App\Helpers\Exceptions\UploadedFileException;
 use App\Helpers\FlashMessage;
 use App\Helpers\UploadedFileHandler;
 use App\Helpers\Validator;
+use App\Registry;
+use App\Services\TweetRepository;
+use App\Services\UserRepository;
+use App\Tweet;
 
 session_start();
 
@@ -15,6 +19,10 @@ const MAX_SIZE = 1024 * 1024 * 3;
 
 $errors = [];
 $data = [];
+
+$userRepository = Registry::get(UserRepository::class);
+$tweetRepository = Registry::get(TweetRepository::class);
+
 
 $newFilename = "";
 $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -52,16 +60,24 @@ if (!empty($errors)) {
 } else {
 
     try {
-        $pdo = new PDO("mysql:host=mysql-server; dbname=truiter", "root", "secret");
-        $stmt = $pdo->prepare("INSERT INTO tweet (text, user_id, created_at, like_count) VALUES (:text, :user_id, :created_at, :like_count)");
 
         $data["user_id"] = $_SESSION["user"]["id"];
         $data["created_at"] = date("Y-m-d h:i:s");
         $data["like_count"] = 0;
 
-        $stmt->execute($data);
-        $id = $pdo->lastInsertId();
+        $userId = $_SESSION["user"]["id"];
 
+        $user = $userRepository->find($userId);
+        if (empty($user)) {
+            header("Location: login.php");
+            exit();
+        }
+        $tweet = new Tweet($data["text"], $user);
+        $tweet->setCreatedAt(new DateTime());
+        $tweet->setLikeCount(0);
+
+        $tweetRepository->save($tweet);
+/*
         if (!empty($newFilename)) {
             try {
                 list($width, $height) = getimagesize(UPLOAD_PATH . "/" . $newFilename);
@@ -77,7 +93,7 @@ if (!empty($errors)) {
             } catch (Exception $e) {
                 $errors[] = $e->getMessage();
             }
-        }
+        }*/
     } catch (PDOException $e) {
         die($e->getMessage());
     }

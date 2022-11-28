@@ -20,14 +20,14 @@
 
             <?php foreach ($tweets as $tweet) : ?>
 
-                <p><?= $tweet["name"] ?> (@<?= $tweet["username"] ?>) - Creation
-                    date: <?= $tweet["created_at"] ?></p>
-                <blockquote><p><?= $tweet["text"] ?></p></blockquote>
-                <p>Like counter: <?= $tweet["like_count"] ?></p>
-                <?php if (count($tweet["attachments"]) > 0) :  ?>
+                <p><?= $tweet->getAuthor()->getName() ?> (@<?= $tweet->getAuthor()->getUsername() ?>) - Creation
+                    date: <?= $tweet->getCreatedAt()->format("Y-m-d") ?></p>
+                <blockquote><p><?= $tweet->getText() ?></p></blockquote>
+                <p>Like counter: <?= $tweet->getLikeCount() ?></p>
+                <?php if (count($tweet->getAttachments()) > 0) :  ?>
                     <ul>
-                        <?php foreach ($tweet["attachments"] as $attachment) :  ?>
-                            <li><?= $attachment["alt_text"] ?></li>
+                        <?php foreach ($tweet->getAttachments() as $attachment) :  ?>
+                            <li><?= $attachment->getAltText(); ?></li>
                         <?php endforeach;  ?>
                     </ul>
                 <?php endif; ?>
