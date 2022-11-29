@@ -1,6 +1,0 @@
-[2022-11-29T10:38:11.493569+00:00] App.WARNING: Foo [] []
-[2022-11-29T10:38:11.496748+00:00] App.ERROR: Bar [] []
-[2022-11-29T10:46:14.798007+00:00] App.WARNING: A vore [] []
-[2022-11-29T10:49:33.293384+00:00] App.INFO: S'ha consultat la pagina [] []
-[2022-11-29T10:50:19.457632+00:00] App.INFO: S'ha consultat la pagina [{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]}] []
-[2022-11-29T10:53:01.634307+00:00] App.INFO: S'ha consultat la pagina [{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]},{"App\\Tweet":[]}] []
