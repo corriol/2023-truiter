@@ -19,11 +19,15 @@ if (empty($username) || empty($password))
 
 if (empty($errors))
 try {
+
+
     $pdo = new PDO("mysql:host=mysql-server; dbname=truiter", "root", "secret");
     $stmt = $pdo->prepare("SELECT * FROM user u WHERE u.username = :username");
     $stmt->bindValue("username", $username);
     $stmt->execute();
     $user = $stmt->fetch();
+
+     // $user = $userRepository->findByUsername($username);
 
     if (empty($user) || (!password_verify($password,  $user["password"])))
         $errors[] = "Nom d'usuari o contrasenya incorrecta";
