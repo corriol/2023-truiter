@@ -6,7 +6,6 @@ session_start();
 use App\User;
 use App\Helpers\FlashMessage;
 
-
 $errors = [];
 
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS);

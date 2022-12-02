@@ -14,5 +14,4 @@ try {
     die($e->getLine() . ": " . $e->getMessage());
 }
 
-
 require 'views/index.view.php';
