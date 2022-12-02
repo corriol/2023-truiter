@@ -7,11 +7,7 @@ $errors = FlashMessage::get('errors', []);
 $data = FlashMessage::get('data',[]);
 $message = FlashMessage::get('message');
 
-
-if (empty($_SESSION["user"])) {
-    header('Location: login.php');
-}
-
+// comprovant si l'usuari ha iniciat sessió
 $user = $_SESSION["user"] ?? null;
 
 if (empty($user)) {
