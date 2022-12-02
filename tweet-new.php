@@ -1,10 +1,7 @@
 <?php
-require_once 'autoload.php';
+require_once 'bootstrap.php';
 
 use App\Helpers\FlashMessage;
-
-session_start();
-// ací va la lògica per crear un nou tweet
 
 $errors = FlashMessage::get('errors', []);
 $data = FlashMessage::get('data',[]);
@@ -15,6 +12,11 @@ if (empty($_SESSION["user"])) {
     header('Location: login.php');
 }
 
-$user = $_SESSION["user"];
+$user = $_SESSION["user"] ?? null;
+
+if (empty($user)) {
+    header('Location: login.php');
+    exit();
+}
 
 require 'views/tweet-new.view.php';

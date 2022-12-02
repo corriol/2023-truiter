@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
-session_start();
 require_once 'vendor/autoload.php';
+session_start();
 
 use App\Registry;
 use App\Services\DB;
@@ -26,6 +26,7 @@ $tweetRepository = new TweetRepository();
 Registry::set(TweetRepository::class, $tweetRepository);
 
 $userRepository = new UserRepository();
+
 Registry::set(UserRepository::class, $userRepository);
 
 $photoRepository = new PhotoRepository();

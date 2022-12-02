@@ -14,8 +14,6 @@ use App\Services\TweetRepository;
 use App\Services\UserRepository;
 use App\Tweet;
 
-session_start();
-
 const UPLOAD_PATH = "uploads";
 const MAX_SIZE = 1024 * 1024 * 3;
 
@@ -64,13 +62,10 @@ if (!empty($errors)) {
 
     try {
 
-        $data["user_id"] = $_SESSION["user"]["id"];
-        $data["created_at"] = date("Y-m-d h:i:s");
-        $data["like_count"] = 0;
+        // $user = $userRepository->find($userId);
+        // recupere l'usuari de la sessió
+        $user = $_SESSION["user"];
 
-        $userId = $_SESSION["user"]["id"];
-
-        $user = $userRepository->find($userId);
         if (empty($user)) {
             header("Location: login.php");
             exit();
@@ -89,12 +84,10 @@ if (!empty($errors)) {
                 $photo->setTweet($tweet);
                 $tweet->addAttachment($photo);
                 $photoRepository->save($photo);
-
             } catch (Exception $e) {
                 $errors[] = $e->getMessage();
             }
         }
-
     } catch (PDOException $e) {
         die($e->getMessage());
     }

@@ -1,7 +1,9 @@
 <?php
-require_once 'autoload.php';
-session_start();
 
-$errors = \App\Helpers\FlashMessage::get("errors", []);
+use App\Helpers\FlashMessage;
+
+require_once 'bootstrap.php';
+
+$errors = FlashMessage::get("errors", []);
 
 require 'views/login.view.php';

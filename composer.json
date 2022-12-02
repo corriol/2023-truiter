@@ -10,7 +10,8 @@
     }
   ],
   "require": {
-    "monolog/monolog": "^3.2"
+    "monolog/monolog": "^3.2",
+    "ext-pdo": "*"
   },
   "autoload": {
     "psr-4": {

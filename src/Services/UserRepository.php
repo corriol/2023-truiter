@@ -22,9 +22,25 @@ class UserRepository
         if (empty($row))
             return null;
 
-        $user = new User($row["username"], $row["name"]);
+        $user = new User($row["name"], $row["username"]);
         $user->setCreatedAt(DateTime::createFromFormat("Y-m-d h:i:s", $row["created_at"]));
         $user->setId($row["id"]);
+        $user->setPassword($row["password"]);
+        return $user;
+    }
+
+    public function findByUsername(string $username): ?User
+    {
+        $stmt = $this->db->run("SELECT * FROM user WHERE username=:username", ["username" => $username]);
+        $row = $stmt->fetch();
+
+        if (empty($row))
+            return null;
+
+        $user = new User($row["name"], $row["username"]);
+        $user->setCreatedAt(DateTime::createFromFormat("Y-m-d h:i:s", $row["created_at"]));
+        $user->setId($row["id"]);
+        $user->setPassword($row["password"]);
         return $user;
     }
 }
