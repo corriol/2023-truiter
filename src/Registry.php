@@ -25,7 +25,8 @@ class Registry
         self::DB,
         TweetRepository::class,
         UserRepository::class,
-        PhotoRepository::class
+        PhotoRepository::class,
+        "logger"
     ];
 
 
