@@ -14,6 +14,14 @@ use App\Services\TweetRepository;
 use App\Services\UserRepository;
 use App\Tweet;
 
+// $user = $userRepository->find($userId);
+// recupere l'usuari de la sessió
+$user = $_SESSION["user"];
+if (empty($user)) {
+    header("Location: login.php");
+    exit();
+}
+
 const UPLOAD_PATH = "uploads";
 const MAX_SIZE = 1024 * 1024 * 3;
 
@@ -38,17 +46,13 @@ try {
 $validTypes = ["image/jpeg", "image/jpg", "image/png"];
 
 if (empty($errors)) {
-
     try {
         $uploadedFile = new UploadedFileHandler($_FILES["file"], $validTypes, MAX_SIZE);
         $newFilename = $uploadedFile->handle(UPLOAD_PATH);
-    }
-    catch (NoUploadedFileException $e) {
-    }
-    catch (UploadedFileException $e) {
+    } catch (NoUploadedFileException $e) {
+    } catch (UploadedFileException $e) {
         $errors[] = $e->getMessage();
-    }
-    catch (Exception $exception) {
+    } catch (Exception $exception) {
         $errors[] = "Error general:" . $exception->getMessage();
     }
 }
@@ -58,47 +62,37 @@ if (!empty($errors)) {
     FlashMessage::set('data', $data);
     header('Location:tweet-new.php');
     exit();
-} else {
+}
+try {
 
-    try {
+    $tweet = new Tweet($data["text"], $user);
+    $tweet->setCreatedAt(new DateTime());
+    $tweet->setLikeCount(0);
 
-        // $user = $userRepository->find($userId);
-        // recupere l'usuari de la sessió
-        $user = $_SESSION["user"];
+    $tweetRepository->save($tweet);
 
-        if (empty($user)) {
-            header("Location: login.php");
-            exit();
+    if (!empty($newFilename)) {
+        try {
+            list($width, $height) = getimagesize(UPLOAD_PATH . "/" . $newFilename);
+            $photo = new Photo($newFilename, $width, $height, $newFilename);
+            $photo->setUrl($newFilename);
+            $photo->setTweet($tweet);
+            $tweet->addAttachment($photo);
+            $photoRepository->save($photo);
+        } catch (Exception $e) {
+            $errors[] = $e->getMessage();
         }
-        $tweet = new Tweet($data["text"], $user);
-        $tweet->setCreatedAt(new DateTime());
-        $tweet->setLikeCount(0);
-
-        $tweetRepository->save($tweet);
-
-        if (!empty($newFilename)) {
-            try {
-                list($width, $height) = getimagesize(UPLOAD_PATH . "/" . $newFilename);
-                $photo = new Photo($newFilename, $width, $height, $newFilename);
-                $photo->setUrl($newFilename);
-                $photo->setTweet($tweet);
-                $tweet->addAttachment($photo);
-                $photoRepository->save($photo);
-            } catch (Exception $e) {
-                $errors[] = $e->getMessage();
-            }
-        }
-    } catch (PDOException $e) {
-        die($e->getMessage());
     }
+} catch (PDOException $e) {
+    $errors[] = $e->getMessage();
+}
 
-    if (!empty($errors)) {
-        FlashMessage::set("errors", $errors);
-        header('Location:tweet-new.php');
-        exit();
-    }
-
-    $_SESSION["data"] = $data;
-    header('Location:index.php');
+if (!empty($errors)) {
+    FlashMessage::set("errors", $errors);
+    header('Location:tweet-new.php');
     exit();
 }
+
+$_SESSION["data"] = $data;
+header('Location:index.php');
+exit();
