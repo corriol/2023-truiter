@@ -1,6 +1,7 @@
 <?php
 require_once 'bootstrap.php';
 
+use App\Core\View;
 use App\Helpers\FlashMessage;
 
 $errors = FlashMessage::get('errors', []);
@@ -15,4 +16,4 @@ if (empty($user)) {
     exit();
 }
 
-require 'views/tweet-new.view.php';
+echo View::render('tweet-new', 'default', compact('errors', 'data', 'message', 'user'));

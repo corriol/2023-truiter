@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\View;
 use App\Registry;
 use App\Services\TweetRepository;
 
@@ -17,4 +18,5 @@ try {
     die($e->getLine() . ": " . $e->getMessage());
 }
 
-require 'views/index.view.php';
+echo View::render('index', 'default', compact('tweets'));
+//require 'views/index.view.php';
