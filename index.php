@@ -3,6 +3,7 @@
 use App\Core\View;
 use App\Registry;
 use App\Services\TweetRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 require_once 'bootstrap.php';
 
@@ -18,5 +19,8 @@ try {
     die($e->getLine() . ": " . $e->getMessage());
 }
 
-echo View::render('index', 'default', compact('tweets'));
-//require 'views/index.view.php';
+$content = View::render('index', 'default', compact('tweets'));
+$response = new Response($content);
+$response->send();
+
+

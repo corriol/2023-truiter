@@ -13,7 +13,7 @@
 <main class="mt-4 container">
     <div class="row">
         <div style="width: 220px" class="position-fixed col-2 d-flex flex-column justify-content-between h-75">
-            <?php require "partials/sidebar.php" ?>
+            <?php require __DIR__ . "/../../partials/sidebar.php" ?>
         </div>
         <div class="offset-2 col-6 border-start border-end border-1 p-4">
             <?= $content ?>

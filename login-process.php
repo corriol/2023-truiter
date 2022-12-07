@@ -31,7 +31,7 @@ if (empty($errors))
 
 if (empty($errors)) {
     $_SESSION["user"] = $user;
-    header('Location: index.php');
+    header('Location: /');
     exit();
 }
 
@@ -40,5 +40,5 @@ $data["username"] = $username;
 FlashMessage::set("data", $data);
 FlashMessage::set("errors", $errors);
 
-header('Location: login.php');
+header('Location: /login');
 exit();

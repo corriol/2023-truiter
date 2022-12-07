@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once 'vendor/autoload.php';
+
 session_start();
 
 use App\Registry;
@@ -12,13 +13,15 @@ use Monolog\Handler\ChromePHPHandler;
 use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 $db = new DB("truiter", "root", "secret", "mysql-server");
 Registry::set(Registry::DB, $db);
 
 // create a log channel
 $log = new Logger('App');
-$log->pushHandler(new StreamHandler('var/app.log', Level::Debug));
+$log->pushHandler(new StreamHandler(__DIR__ . '/var/app.log', Level::Debug));
 // $log->pushHandler(new ChromePHPHandler(Level::Debug));
 Registry::set("logger", $log);
 

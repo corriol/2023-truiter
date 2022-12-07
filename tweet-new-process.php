@@ -13,14 +13,19 @@ use App\Services\PhotoRepository;
 use App\Services\TweetRepository;
 use App\Services\UserRepository;
 use App\Tweet;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
-// $user = $userRepository->find($userId);
-// recupere l'usuari de la sessió
-$user = $_SESSION["user"];
+
+// comprovant si l'usuari ha iniciat sessió
+$user = $_SESSION["user"] ?? null;
+
 if (empty($user)) {
-    header("Location: login.php");
-    exit();
+    $response = new RedirectResponse('login.php');
+    $response->send();
 }
+
+$request = Request::createFromGlobals();
 
 const UPLOAD_PATH = "uploads";
 const MAX_SIZE = 1024 * 1024 * 3;
@@ -34,7 +39,8 @@ $photoRepository = Registry::get(PhotoRepository::class);
 
 
 $newFilename = "";
-$text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$text = $request->request->get('text', '');
+$text = filter_var($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 try {
     Validator::lengthBetween($text, 2, 280);
@@ -60,8 +66,8 @@ if (empty($errors)) {
 if (!empty($errors)) {
     FlashMessage::set('errors', $errors);
     FlashMessage::set('data', $data);
-    header('Location:tweet-new.php');
-    exit();
+    $response = new RedirectResponse("tweet-new.php");
+    $response->send();
 }
 try {
 
@@ -89,10 +95,10 @@ try {
 
 if (!empty($errors)) {
     FlashMessage::set("errors", $errors);
-    header('Location:tweet-new.php');
-    exit();
+    $response = new RedirectResponse("tweet-new.php");
+    $response->send();
 }
 
 $_SESSION["data"] = $data;
-header('Location:index.php');
-exit();
+$response = new RedirectResponse("index.php");
+$response->send();
