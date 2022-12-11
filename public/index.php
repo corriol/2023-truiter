@@ -4,25 +4,24 @@ require_once __DIR__ . '/../bootstrap.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing;
 
 $request = Request::createFromGlobals();
+$routes = include __DIR__.'/../routes.php';
 
-$path = $request->getPathInfo();
+$context = new Routing\RequestContext();
+$context->fromRequest($request);
+$matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 
-$routes = [
-    "/" => "index.php",
-    "/login" => "login.php",
-    "/login/process" => "login-process.php",
-    "/tweet/new" => "tweet-new.php",
-    "/tweet/new/process" => "tweet-new-process.php",
-    "/logout" => "logout.php"
-    ];
+try {
+    extract($matcher->match($request->getPathInfo()), EXTR_SKIP);
+    include sprintf(__DIR__.'/../%s.php', $_route);
 
-if (array_key_exists($path, $routes))
-    require __DIR__ . "/../{$routes[$path]}";
-else {
-    $response = new Response("page not found!");
-    $response->setStatusCode(Response::HTTP_NOT_FOUND);
-    $response->prepare($request);
-    $response->send();
+} catch (Routing\Exception\ResourceNotFoundException $exception) {
+    $response = new Response('Not Found', 404);
+} catch (Exception $exception) {
+    var_dump($exception);
+    $response = new Response("An error occurred: {$exception->getMessage()}", 500);
 }
+
+$response->send();
