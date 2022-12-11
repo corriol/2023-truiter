@@ -5,7 +5,7 @@
     </div>
 
 <?php endif; ?>
-<form class="mb-4" method="post" action="/login/process">
+<form class="mb-4" method="post" action="/login">
 
     <label for="username" class="form-label"">Usuari</label>
     <input id="username" class="form-control mb-2" name="username">
