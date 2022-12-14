@@ -72,8 +72,13 @@ class DefaultController
         FlashMessage::set("errors", $errors);
 
         return new RedirectResponse("/login");
-
     }
 
+    public function logout(): Response {
+        session_unset();
+        session_destroy();
+        setcookie(session_name(), "", -10);
+        return new RedirectResponse("/");
+    }
 
 }

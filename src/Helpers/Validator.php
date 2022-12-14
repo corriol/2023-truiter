@@ -16,7 +16,7 @@ class Validator
      */
     static function lengthBetween(string $value,int $min,int $max, string $message = ''): bool {
 
-        if (strlen($value) >= $min || strlen($value)<=$max)
+        if (strlen($value) >= $min && strlen($value)<=$max)
             return true;
 
         if (empty($message))

@@ -13,7 +13,7 @@ class ValidatorTest extends TestCase
 
     function testLengthBetweenRaiseException2() {
         $this->expectException(InvalidArgumentException::class);
-        Validator::lengthBetween("12456", 3, 5);
+        Validator::lengthBetween("123456", 3, 5);
     }
 
     function testLengthBetweenWorksProperly() {
@@ -46,7 +46,7 @@ class ValidatorTest extends TestCase
     {
         return [
             [["12", 3, 5], false],
-            [["12456", 3, 5], false],
+            [["123456", 3, 5], false],
             [["123", 3, 5], true],
             [["12345", 3, 5], true],
         ];
