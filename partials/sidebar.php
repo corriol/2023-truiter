@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light flex-column align-items-start">
     <a class="ms-3 navbar-brand" href="#">
-        <img src="assets/eggcracked_2.svg" alt="" width="50" height="50">
+        <img src="/assets/eggcracked_2.svg" alt="" width="50" height="50">
     </a>
 
     <ul class="nav flex-column">

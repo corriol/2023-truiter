@@ -14,6 +14,7 @@ use App\Services\PhotoRepository;
 use App\Services\TweetRepository;
 use App\Services\UserRepository;
 use App\Tweet;
+use App\Validator\NewTweetRequestValidator;
 use DateTime;
 use Exception;
 use InvalidArgumentException;
@@ -25,7 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TweetController
 {
 
-    const UPLOAD_PATH = "uploads";
+    const UPLOAD_PATH = __DIR__ . "/../../public/uploads";
     const MAX_SIZE = 1024 * 1024 * 3;
 
     public function create(Request $request): Response
@@ -60,17 +61,10 @@ class TweetController
         $tweetRepository = Registry::get(TweetRepository::class);
         $photoRepository = Registry::get(PhotoRepository::class);
 
-
         $newFilename = "";
-        $text = $request->request->get('text', '');
-        $text = filter_var($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        try {
-            Validator::lengthBetween($text, 2, 280);
-            $data["text"] = $text;
-        } catch (InvalidArgumentException $e) {
-            $errors[] = $e->getMessage();
-        }
+        $validator = new NewTweetRequestValidator();
+        list($data, $errors) = $validator->validate($request);
 
         $validTypes = ["image/jpeg", "image/jpg", "image/png"];
 
@@ -85,8 +79,6 @@ class TweetController
                 $errors[] = "Error general:" . $exception->getMessage();
             }
         }
-
-        var_dump($errors);
 
         if (!empty($errors)) {
             FlashMessage::set('errors', $errors);
@@ -104,7 +96,7 @@ class TweetController
 
             if (!empty($newFilename)) {
                 try {
-                    list($width, $height) = getimagesize(UPLOAD_PATH . "/" . $newFilename);
+                    list($width, $height) = getimagesize(self::UPLOAD_PATH . "/" . $newFilename);
                     $photo = new Photo($newFilename, $width, $height, $newFilename);
                     $photo->setUrl($newFilename);
                     $photo->setTweet($tweet);
