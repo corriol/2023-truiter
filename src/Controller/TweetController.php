@@ -6,6 +6,7 @@ use App\Core\View;
 use App\Helpers\Exceptions\NoUploadedFileException;
 use App\Helpers\Exceptions\UploadedFileException;
 use App\Helpers\FlashMessage;
+use App\Helpers\TwitterDateFormat;
 use App\Helpers\UploadedFileHandler;
 use App\Helpers\Validator;
 use App\Photo;
@@ -34,6 +35,8 @@ class TweetController
         $errors = FlashMessage::get('errors', []);
         $data = FlashMessage::get('data', []);
         $message = FlashMessage::get('message');
+
+
 
         // comprovant si l'usuari ha iniciat sessió
         $user = $_SESSION["user"] ?? null;

@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Core\View;
 use App\Helpers\FlashMessage;
+use App\Helpers\TwitterDateFormat;
 use App\Registry;
 use App\Services\TweetRepository;
 use App\Services\UserRepository;
@@ -25,7 +26,9 @@ class DefaultController
 
         $logger->info("S'ha consultat la pagina", $tweets);
 
-        $content = View::render('index', 'default', compact('tweets'));
+        $dateFormat = new TwitterDateFormat();
+
+        $content = View::render('index', 'default', compact('tweets', 'dateFormat'));
         return new Response($content);
     }
 
